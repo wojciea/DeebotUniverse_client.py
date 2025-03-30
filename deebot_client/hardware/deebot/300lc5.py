@@ -1,4 +1,4 @@
-"""DEEBOT GOAT O500 Panorama Capabilities."""
+"""DEEBOT GOAT O500 Capabilities."""
 
 from __future__ import annotations
 
@@ -39,10 +39,8 @@ from deebot_client.commands.json.clean import CleanV2, GetCleanInfoV2
 from deebot_client.commands.json.custom import CustomCommand
 from deebot_client.commands.json.error import GetError
 from deebot_client.commands.json.life_span import GetLifeSpan, ResetLifeSpan
-from deebot_client.commands.json.map import GetCachedMapInfo, GetMajorMap, GetMapTrace
 from deebot_client.commands.json.network import GetNetInfo
 from deebot_client.commands.json.play_sound import PlaySound
-from deebot_client.commands.json.pos import GetPos
 from deebot_client.commands.json.stats import GetStats, GetTotalStats
 from deebot_client.commands.json.true_detect import GetTrueDetect, SetTrueDetect
 from deebot_client.commands.json.volume import GetVolume, SetVolume
@@ -52,7 +50,6 @@ from deebot_client.events import (
     AvailabilityEvent,
     BatteryEvent,
     BorderSwitchEvent,
-    CachedMapInfoEvent,
     ChildLockEvent,
     CrossMapBorderWarningEvent,
     CustomCommandEvent,
@@ -60,13 +57,8 @@ from deebot_client.events import (
     ErrorEvent,
     LifeSpan,
     LifeSpanEvent,
-    MajorMapEvent,
-    MapChangedEvent,
-    MapTraceEvent,
-    MultimapStateEvent,
     MoveUpWarningEvent,
     NetworkInfoEvent,
-    PositionsEvent,
     ReportStatsEvent,
     SafeProtectEvent,
     StateEvent,
@@ -108,13 +100,6 @@ DEVICES[short_name(__name__)] = StaticDeviceInfo(
                 )
             ],
             reset=ResetLifeSpan,
-        ),
-        map=CapabilityMap(
-            cached_info=CapabilityEvent(CachedMapInfoEvent, [GetCachedMapInfo()]),
-            changed=CapabilityEvent(MapChangedEvent, []),
-            major=CapabilityEvent(MajorMapEvent, [GetMajorMap()]),
-            position=CapabilityEvent(PositionsEvent, [GetPos()]),
-            trace=CapabilityEvent(MapTraceEvent, [GetMapTrace()]),
         ),
         network=CapabilityEvent(NetworkInfoEvent, [GetNetInfo()]),
         play_sound=CapabilityExecute(PlaySound),
