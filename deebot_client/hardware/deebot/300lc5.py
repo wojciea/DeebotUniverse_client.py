@@ -40,9 +40,11 @@ from deebot_client.commands.json.custom import CustomCommand
 from deebot_client.commands.json.error import GetError
 from deebot_client.commands.json.life_span import GetLifeSpan, ResetLifeSpan
 from deebot_client.commands.json.map import GetCachedMapInfo, GetMajorMap, GetMapTrace
+from deebot_client.commands.json.multimap_state import GetMultimapState, SetMultimapState
 from deebot_client.commands.json.network import GetNetInfo
 from deebot_client.commands.json.play_sound import PlaySound
 from deebot_client.commands.json.pos import GetPos
+from deebot_client.commands.json.relocation import SetRelocationState
 from deebot_client.commands.json.stats import GetStats, GetTotalStats
 from deebot_client.commands.json.true_detect import GetTrueDetect, SetTrueDetect
 from deebot_client.commands.json.volume import GetVolume, SetVolume
@@ -63,10 +65,12 @@ from deebot_client.events import (
     MajorMapEvent,
     MapChangedEvent,
     MapTraceEvent,
+    MultimapStateEvent,
     MoveUpWarningEvent,
     NetworkInfoEvent,
     PositionsEvent,
     ReportStatsEvent,
+    RoomsEvent,
     SafeProtectEvent,
     StateEvent,
     StatsEvent,
@@ -108,12 +112,19 @@ DEVICES[short_name(__name__)] = StaticDeviceInfo(
             ],
             reset=ResetLifeSpan,
         ),
-        map=CapabilityMap(
-            # cached_info=CapabilityEvent(CachedMapInfoEvent, [GetCachedMapInfo()]),
-            # changed=CapabilityEvent(MapChangedEvent, []),
+map=CapabilityMap(
+            cached_info=CapabilityEvent(
+                CachedMapInfoEvent, [GetCachedMapInfo(version=2)]
+            ),
+            changed=CapabilityEvent(MapChangedEvent, []),
             major=CapabilityEvent(MajorMapEvent, [GetMajorMap()]),
-            # position=CapabilityEvent(PositionsEvent, [GetPos()]),
-            # trace=CapabilityEvent(MapTraceEvent, [GetMapTrace()]),
+            multi_state=CapabilitySetEnable(
+                MultimapStateEvent, [GetMultimapState()], SetMultimapState
+            ),
+            position=CapabilityEvent(PositionsEvent, [GetPos()]),
+            relocation=CapabilityExecute(SetRelocationState),
+            rooms=CapabilityEvent(RoomsEvent, [GetCachedMapInfo(version=2)]),
+            trace=CapabilityEvent(MapTraceEvent, [GetMapTrace()]),
         ),
         network=CapabilityEvent(NetworkInfoEvent, [GetNetInfo()]),
         play_sound=CapabilityExecute(PlaySound),
