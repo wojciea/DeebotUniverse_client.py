@@ -108,6 +108,13 @@ DEVICES[short_name(__name__)] = StaticDeviceInfo(
             ],
             reset=ResetLifeSpan,
         ),
+        map=CapabilityMap(
+            # cached_info=CapabilityEvent(CachedMapInfoEvent, [GetCachedMapInfo()]),
+            # changed=CapabilityEvent(MapChangedEvent, []),
+            major=CapabilityEvent(MajorMapEvent, [GetMajorMap()]),
+            # position=CapabilityEvent(PositionsEvent, [GetPos()]),
+            # trace=CapabilityEvent(MapTraceEvent, [GetMapTrace()]),
+        ),
         network=CapabilityEvent(NetworkInfoEvent, [GetNetInfo()]),
         play_sound=CapabilityExecute(PlaySound),
         settings=CapabilitySettings(
