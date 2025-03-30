@@ -114,7 +114,7 @@ DEVICES[short_name(__name__)] = StaticDeviceInfo(
         ),
 map=CapabilityMap(
             cached_info=CapabilityEvent(
-                CachedMapInfoEvent, [GetCachedMapInfo(version=2)]
+                CachedMapInfoEvent, [GetCachedMapInfo()]
             ),
             changed=CapabilityEvent(MapChangedEvent, []),
             major=CapabilityEvent(MajorMapEvent, [GetMajorMap()]),
@@ -123,7 +123,7 @@ map=CapabilityMap(
             ),
             position=CapabilityEvent(PositionsEvent, [GetPos()]),
             relocation=CapabilityExecute(SetRelocationState),
-            rooms=CapabilityEvent(RoomsEvent, [GetCachedMapInfo(version=2)]),
+            rooms=CapabilityEvent(RoomsEvent, [GetCachedMapInfo()]),
             trace=CapabilityEvent(MapTraceEvent, [GetMapTrace()]),
         ),
         network=CapabilityEvent(NetworkInfoEvent, [GetNetInfo()]),
